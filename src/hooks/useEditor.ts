@@ -3,7 +3,11 @@ import { nextTick, onBeforeUnmount, ref, type Ref } from 'vue'
 let editor: monaco.editor.IStandaloneCodeEditor
 export function useEditor() {
   const editorRef = ref<HTMLElement>()
-  const onEditorInit = (options: { code: Ref<string>; language: string }) => {
+  const onEditorInit = (options: {
+    code: Ref<string>
+    language: string
+    onChange?: (code: string) => void
+  }) => {
     nextTick(() => {
       monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
         noSemanticValidation: true,
@@ -33,7 +37,9 @@ export function useEditor() {
       // console.log(editor)
       // 监听值的变化
       editor.onDidChangeModelContent(() => {
-        options.code.value = editor.getValue()
+        const newCode = editor.getValue()
+        options.code.value = newCode
+        options.onChange?.(newCode)
       })
     })
     onBeforeUnmount(() => {

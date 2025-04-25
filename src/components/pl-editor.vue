@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useEditor } from '@/hooks/useEditor'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const { editorRef, onEditorInit } = useEditor()
 const { code = '', language = '' } = defineProps<{
@@ -8,12 +8,29 @@ const { code = '', language = '' } = defineProps<{
   language: string
 }>()
 
+const emit = defineEmits<{
+  'update:code': [code: string]
+}>()
+
+const editorCode = ref(code)
+
 onMounted(() => {
   onEditorInit({
-    code: ref(code),
+    code: editorCode,
     language,
+    onChange: (newCode: string) => {
+      editorCode.value = newCode
+      emit('update:code', newCode)
+    },
   })
 })
+
+watch(
+  () => code,
+  (newCode) => {
+    editorCode.value = newCode
+  },
+)
 </script>
 
 <template>

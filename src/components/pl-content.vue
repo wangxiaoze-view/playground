@@ -1,8 +1,55 @@
 <script lang="ts" setup>
 import { useTab } from '@/hooks/useTab'
 import plEditor from './pl-editor.vue'
+import { ref, watch, onMounted } from 'vue'
+import { test } from '@/config/template'
 
 const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
+
+const htmlCode = ref('<div>Hello World</div>')
+const cssCode = ref('div{color: red;}')
+const jsCode = ref('console.log(1)')
+const iframeRef = ref<HTMLIFrameElement | null>(null)
+
+const updatePreview = () => {
+  if (!iframeRef.value) return
+
+  const iframe = iframeRef.value
+  const doc = iframe.contentDocument || iframe.contentWindow?.document
+
+  if (!doc) return
+
+  doc.open()
+  doc.write(test(htmlCode.value, cssCode.value, jsCode.value))
+  doc.close()
+}
+
+watch(
+  [htmlCode, cssCode, jsCode],
+  () => {
+    updatePreview()
+  },
+  { deep: true },
+)
+
+const handleCodeChange = (code: string) => {
+  switch (initCodeTab.value) {
+    case 'html':
+      htmlCode.value = code
+      break
+    case 'css':
+      cssCode.value = code
+      break
+    case 'javascript':
+      jsCode.value = code
+      break
+  }
+}
+
+// 初始化时更新预览
+onMounted(() => {
+  updatePreview()
+})
 </script>
 
 <template>
@@ -21,10 +68,10 @@ const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
             </span>
           </div>
           <div class="tool">
-            <el-button type="primary">
+            <el-button type="primary" @click="updatePreview">
               <i class="ri-code-ai-line icon icon-middle"></i>运行
             </el-button>
-            <el-button type="primary">
+            <el-button type="primary" @click="updatePreview">
               <i class="ri-refresh-line icon icon-middle"></i>刷新
             </el-button>
 
@@ -41,12 +88,23 @@ const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
         </div>
 
         <div class="pl-content-left--editor pl-main">
-          <plEditor code="<div>Hello World</div>" language="html" v-if="initCodeTab === 'html'" />
-          <plEditor code=".div{colorr: red;}" language="css" v-if="initCodeTab === 'css'" />
           <plEditor
-            code="console.log(1)"
+            :code="htmlCode"
+            language="html"
+            v-if="initCodeTab === 'html'"
+            @update:code="handleCodeChange"
+          />
+          <plEditor
+            :code="cssCode"
+            language="css"
+            v-if="initCodeTab === 'css'"
+            @update:code="handleCodeChange"
+          />
+          <plEditor
+            :code="jsCode"
             language="javascript"
             v-if="initCodeTab === 'javascript'"
+            @update:code="handleCodeChange"
           />
         </div>
       </div>
@@ -61,7 +119,12 @@ const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
           <div></div>
         </div>
         <div class="pl-content-right--editor pl-main">
-          <iframe src="" frameborder="0"></iframe>
+          <iframe
+            ref="iframeRef"
+            src="about:blank"
+            frameborder="0"
+            :docsrc="test(htmlCode, cssCode, jsCode)"
+          ></iframe>
         </div>
       </div>
     </el-col>
@@ -124,5 +187,6 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
+  background-color: #1e1e1e;
 }
 </style>
