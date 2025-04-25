@@ -6,7 +6,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { setupStore } from './store'
 import { useThemeStore } from './store/modules/theme'
-
+import './libs/initEditorConfig'
 const app = createApp(App)
 setupStore(app)
 const store = useThemeStore()

@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-//
+import { useTab } from '@/hooks/useTab'
+import plEditor from './pl-editor.vue'
+
+const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
 </script>
 
 <template>
@@ -8,9 +11,14 @@
       <div class="pl-content-left">
         <div class="pl-content-left--header">
           <div class="tab">
-            <span class="active"><i class="ri-html5-fill icon icon-middle"></i>html</span>
-            <span><i class="ri-css3-fill icon icon-middle"></i>css</span>
-            <span><i class="ri-javascript-fill icon icon-middle"></i>javascript</span>
+            <span
+              :class="[initCodeTab === item.name ? 'active' : '']"
+              v-for="item in codeTab"
+              :key="item.name"
+              @click="onChangeCodeTab(item.name)"
+            >
+              <i :class="item.icon"></i>{{ item.name }}
+            </span>
           </div>
           <div class="tool">
             <el-button type="primary">
@@ -32,7 +40,15 @@
           </div>
         </div>
 
-        <div class="pl-content-left--editor pl-main"></div>
+        <div class="pl-content-left--editor pl-main">
+          <plEditor code="<div>Hello World</div>" language="html" v-if="initCodeTab === 'html'" />
+          <plEditor code=".div{colorr: red;}" language="css" v-if="initCodeTab === 'css'" />
+          <plEditor
+            code="console.log(1)"
+            language="javascript"
+            v-if="initCodeTab === 'javascript'"
+          />
+        </div>
       </div>
     </el-col>
     <el-col :span="12">
@@ -44,7 +60,9 @@
           </div>
           <div></div>
         </div>
-        <div class="pl-content-left--editor pl-main"></div>
+        <div class="pl-content-right--editor pl-main">
+          <iframe src="" frameborder="0"></iframe>
+        </div>
       </div>
     </el-col>
   </el-row>
@@ -52,6 +70,7 @@
 
 <style lang="scss" scoped>
 .pl-content {
+  overflow: hidden;
   &-left,
   &-right {
     height: 100%;
@@ -99,5 +118,11 @@
       margin-left: 0;
     }
   }
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 </style>

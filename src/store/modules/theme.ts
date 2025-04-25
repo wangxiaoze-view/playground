@@ -1,4 +1,4 @@
-import { useComputedNum, useCssVar } from '@/hooks'
+import { useComputedNum, useCssVar } from 'functional-helpers/hooks'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 

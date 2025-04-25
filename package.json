@@ -19,6 +19,7 @@
   "dependencies": {
     "element-plus": "^2.9.8",
     "functional-helpers": "git@github.com:wangxiaoze-view/functional-helpers-lib.git",
+    "monaco-editor": "^0.52.2",
     "pinia": "^3.0.2",
     "remixicon": "^4.6.0",
     "sass": "^1.87.0",

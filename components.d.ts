@@ -22,6 +22,7 @@ declare module 'vue' {
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     PlContent: typeof import('./src/components/pl-content.vue')['default']
+    PlEditor: typeof import('./src/components/pl-editor.vue')['default']
     PlHeader: typeof import('./src/components/pl-header.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']

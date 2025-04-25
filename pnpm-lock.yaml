@@ -14,6 +14,9 @@ importers:
       functional-helpers:
         specifier: git@github.com:wangxiaoze-view/functional-helpers-lib.git
         version: https://codeload.github.com/wangxiaoze-view/functional-helpers-lib/tar.gz/3142b3b6ce218c347169b0c17a4502ec4b45f5e5(@vueuse/core@9.13.0(vue@3.5.13(typescript@5.8.3)))(ali-oss@6.22.0)(axios@1.9.0)(currency.js@2.0.4)(dayjs@1.11.13)(fundebug-javascript@2.8.8)(fundebug-vue@0.3.6)(lodash-es@4.17.21)(mitt@3.0.1)(vue@3.5.13(typescript@5.8.3))
+      monaco-editor:
+        specifier: ^0.52.2
+        version: 0.52.2
       pinia:
         specifier: ^3.0.2
         version: 3.0.2(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
@@ -2542,6 +2545,9 @@ packages:
 
   mlly@1.7.4:
     resolution: {integrity: sha512-qmdSIPC4bDJXgZTCR7XosJiNKySV7O215tsPtDN9iEO/7q/76b/ijtgRu/+epFXSJhijtTCCGp3DWS549P3xKw==}
+
+  monaco-editor@0.52.2:
+    resolution: {integrity: sha512-GEQWEZmfkOGLdd3XK8ryrfWz3AIP8YymVXiPHEdewrUq7mh0qrKrfHLNCXcbB6sTnMLnOZ3ztSiKcciFUkIJwQ==}
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -5977,6 +5983,8 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 1.3.1
       ufo: 1.6.1
+
+  monaco-editor@0.52.2: {}
 
   mrmime@2.0.1: {}
 
