@@ -6,7 +6,7 @@
     ".gitignore": ".gitattributes",
     ".env": ".env.development,.env.production",
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig,.cz-message.cjs,.browserslistrc,.stylelintrc.mjs,.stylelintignore,.stylelintcache,.release-it.json,commitlint.config.cjs,commitlog-option.mjs",
-    "rsbuild.config.ts": "tsconfig.json,web-types.json,auto-imports.d.ts,components.d.ts,LICENSE"
+    "vite.config.ts": "tsconfig.json,web-types.json,auto-imports.d.ts,components.d.ts,LICENSE"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
