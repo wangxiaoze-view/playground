@@ -8,6 +8,11 @@ import { setupStore } from './store'
 import { useThemeStore } from './store/modules/theme'
 import './libs/initEditorConfig'
 const app = createApp(App)
+// 关闭 Vue 警告日志
+app.config.warnHandler = () => {}
+// 关闭 Vue 警告日志
+app.config.warnHandler = () => {}
+
 setupStore(app)
 const store = useThemeStore()
 store.onInitThemeColorr()

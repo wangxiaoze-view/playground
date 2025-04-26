@@ -1,60 +1,40 @@
-import { onRenderHtml, type Template, templates } from '@/config/template'
+import { onRenderHtml, templates } from '@/config/template'
+import { useCodeStore } from '@/store/modules/code'
+import { parseShareLink, type ShareTemplateData } from '@/utils/share'
 import { computed, onMounted, ref } from 'vue'
 
 export function useTemplate() {
   const iframeRef = ref<HTMLIFrameElement | null>(null)
 
-  const currrentTemplateKey = ref('default')
-
-  const htmlCode = ref('')
-  const cssCode = ref('')
-  const jsCode = ref('')
-
+  const store = useCodeStore()
   const onGetRenderStr = () => {
-    const current = onGetCurrentTemplate.value
-    return onRenderHtml(htmlCode.value, cssCode.value, jsCode.value, current?.cdn.join('')!)
-  }
-
-  // 更新editor
-  const onChangeEditor = (code: string, tabName: string) => {
-    switch (tabName) {
-      case 'html':
-        htmlCode.value = code
-        break
-      case 'css':
-        cssCode.value = code
-        break
-      case 'javascript':
-        jsCode.value = code
-        break
-    }
+    return onRenderHtml(store.htmlCode, store.cssCode, store.jsCode, onGetCurrentTemplate.value!)
   }
 
   // 切换模板
   const onGetCurrentTemplate = computed(() => {
-    return templates.find((item) => item.key === currrentTemplateKey.value)
+    return templates.find((item) => item.key === store.currrentTemplateKey)
   })
-  const onChangeTemplate = () => {
-    onInitTemplate(onGetCurrentTemplate.value!)
+
+  const onGetTmpParams = (): ShareTemplateData => {
+    return {
+      html: onGetCurrentTemplate.value!.html,
+      css: onGetCurrentTemplate.value!.css,
+      js: onGetCurrentTemplate.value!.js,
+      template: store.currrentTemplateKey,
+    }
   }
-  const onInitTemplate = (template: Template) => {
-    htmlCode.value = template.html
-    cssCode.value = template.css
-    jsCode.value = template.js
+  const onChangeTemplate = () => {
+    store.onSetTemplateCode(onGetTmpParams())
   }
 
   onMounted(() => {
-    onInitTemplate(onGetCurrentTemplate.value!)
+    const shareData = parseShareLink()
+    store.onSetTemplateCode(shareData ? shareData : onGetTmpParams())
   })
   return {
+    store,
     iframeRef,
-    htmlCode,
-    cssCode,
-    jsCode,
-    // onUpdatePreview,
-    onChangeEditor,
-    currrentTemplateKey,
-    onInitTemplate,
     templates,
     onChangeTemplate,
     onGetRenderStr,

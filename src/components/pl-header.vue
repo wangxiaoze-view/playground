@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/store/modules/theme'
-import { storeToRefs } from 'pinia'
 import { EColor } from 'functional-helpers/enums'
-
+import plShare from './pl-share.vue'
 const store = useThemeStore()
-const { getThemeColor } = storeToRefs(store)
 </script>
 
 <template>
@@ -29,9 +27,7 @@ const { getThemeColor } = storeToRefs(store)
             <i class="ri-download-cloud-line icon-middle"></i>下载
           </el-button>
         </el-tooltip>
-        <el-tooltip class="box-item" effect="light" content="分享" placement="bottom">
-          <el-button type="primary"><i class="ri-share-line icon-middle"></i>分享</el-button>
-        </el-tooltip>
+        <plShare />
         <el-tooltip class="box-item" effect="light" content="设置" placement="bottom">
           <el-button type="primary"><i class="ri-settings-2-line icon-middle"></i>设置</el-button>
         </el-tooltip>

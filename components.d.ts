@@ -13,6 +13,7 @@ declare module 'vue' {
     ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElHeader: typeof import('element-plus/es')['ElHeader']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
@@ -26,6 +27,7 @@ declare module 'vue' {
     PlContent: typeof import('./src/components/pl-content.vue')['default']
     PlEditor: typeof import('./src/components/pl-editor.vue')['default']
     PlHeader: typeof import('./src/components/pl-header.vue')['default']
+    PlShare: typeof import('./src/components/pl-share.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }

@@ -14,6 +14,9 @@ importers:
       functional-helpers:
         specifier: git@github.com:wangxiaoze-view/functional-helpers-lib.git
         version: https://codeload.github.com/wangxiaoze-view/functional-helpers-lib/tar.gz/3142b3b6ce218c347169b0c17a4502ec4b45f5e5(@vueuse/core@9.13.0(vue@3.5.13(typescript@5.8.3)))(ali-oss@6.22.0)(axios@1.9.0)(currency.js@2.0.4)(dayjs@1.11.13)(fundebug-javascript@2.8.8)(fundebug-vue@0.3.6)(lodash-es@4.17.21)(mitt@3.0.1)(vue@3.5.13(typescript@5.8.3))
+      lz-string:
+        specifier: ^1.5.0
+        version: 1.5.0
       monaco-editor:
         specifier: ^0.52.2
         version: 0.52.2
@@ -2449,6 +2452,10 @@ packages:
   lru-cache@7.18.3:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
+
+  lz-string@1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
+    hasBin: true
 
   macos-release@3.3.0:
     resolution: {integrity: sha512-tPJQ1HeyiU2vRruNGhZ+VleWuMQRro8iFtJxYgnS4NQe+EukKF6aGiIT+7flZhISAt2iaXBCfFGvAyif7/f8nQ==}
@@ -5909,6 +5916,8 @@ snapshots:
       yallist: 3.1.1
 
   lru-cache@7.18.3: {}
+
+  lz-string@1.5.0: {}
 
   macos-release@3.3.0: {}
 

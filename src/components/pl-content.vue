@@ -2,20 +2,12 @@
 import { useTab } from '@/hooks/useTab'
 import plEditor from './pl-editor.vue'
 import { useTemplate } from '@/hooks/useTemplate'
+import { parseShareLink } from '@/utils/share'
+import { onMounted } from 'vue'
 
 const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
 
-const {
-  htmlCode,
-  cssCode,
-  jsCode,
-  iframeRef,
-  currrentTemplateKey,
-  onChangeEditor,
-  onChangeTemplate,
-  templates,
-  onGetRenderStr,
-} = useTemplate()
+const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTemplate()
 </script>
 
 <template>
@@ -35,7 +27,7 @@ const {
           </div>
           <div class="tool">
             <el-select
-              v-model="currrentTemplateKey"
+              v-model="store.currrentTemplateKey"
               @change="onChangeTemplate"
               placeholder="请选择模板"
             >
@@ -64,22 +56,22 @@ const {
 
         <div class="pl-content-left--editor pl-main">
           <plEditor
-            :code="htmlCode"
+            :code="store.htmlCode"
             language="html"
             v-if="initCodeTab === 'html'"
-            @update:code="(code) => onChangeEditor(code, initCodeTab)"
+            @update:code="(code) => store.onChangeEditor(code, initCodeTab)"
           />
           <plEditor
-            :code="cssCode"
+            :code="store.cssCode"
             language="css"
             v-if="initCodeTab === 'css'"
-            @update:code="(code) => onChangeEditor(code, initCodeTab)"
+            @update:code="(code) => store.onChangeEditor(code, initCodeTab)"
           />
           <plEditor
-            :code="jsCode"
+            :code="store.jsCode"
             language="javascript"
             v-if="initCodeTab === 'javascript'"
-            @update:code="(code) => onChangeEditor(code, initCodeTab)"
+            @update:code="(code) => store.onChangeEditor(code, initCodeTab)"
           />
         </div>
       </div>
