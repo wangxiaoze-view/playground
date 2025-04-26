@@ -40,6 +40,7 @@
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/tsconfig": "^0.7.0",
     "commitizen": "^4.3.1",
+    "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "cz-message-helper": "^2.0.0",
     "eslint": "^9.22.0",
