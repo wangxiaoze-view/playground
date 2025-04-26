@@ -1,55 +1,21 @@
 <script lang="ts" setup>
 import { useTab } from '@/hooks/useTab'
 import plEditor from './pl-editor.vue'
-import { ref, watch, onMounted } from 'vue'
-import { test } from '@/config/template'
+import { useTemplate } from '@/hooks/useTemplate'
 
 const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
 
-const htmlCode = ref('<div>Hello World</div>')
-const cssCode = ref('div{color: red;}')
-const jsCode = ref('console.log(1)')
-const iframeRef = ref<HTMLIFrameElement | null>(null)
-
-const updatePreview = () => {
-  if (!iframeRef.value) return
-
-  const iframe = iframeRef.value
-  const doc = iframe.contentDocument || iframe.contentWindow?.document
-
-  if (!doc) return
-
-  doc.open()
-  doc.write(test(htmlCode.value, cssCode.value, jsCode.value))
-  doc.close()
-}
-
-watch(
-  [htmlCode, cssCode, jsCode],
-  () => {
-    updatePreview()
-  },
-  { deep: true },
-)
-
-const handleCodeChange = (code: string) => {
-  switch (initCodeTab.value) {
-    case 'html':
-      htmlCode.value = code
-      break
-    case 'css':
-      cssCode.value = code
-      break
-    case 'javascript':
-      jsCode.value = code
-      break
-  }
-}
-
-// 初始化时更新预览
-onMounted(() => {
-  updatePreview()
-})
+const {
+  htmlCode,
+  cssCode,
+  jsCode,
+  iframeRef,
+  currrentTemplateKey,
+  onChangeEditor,
+  onChangeTemplate,
+  templates,
+  onGetRenderStr,
+} = useTemplate()
 </script>
 
 <template>
@@ -68,10 +34,19 @@ onMounted(() => {
             </span>
           </div>
           <div class="tool">
-            <el-button type="primary" @click="updatePreview">
-              <i class="ri-code-ai-line icon icon-middle"></i>运行
-            </el-button>
-            <el-button type="primary" @click="updatePreview">
+            <el-select
+              v-model="currrentTemplateKey"
+              @change="onChangeTemplate"
+              placeholder="请选择模板"
+            >
+              <el-option
+                v-for="item in templates"
+                :key="item.key"
+                :value="item.key"
+                :label="item.label"
+              ></el-option>
+            </el-select>
+            <el-button type="primary" @click="onGetRenderStr">
               <i class="ri-refresh-line icon icon-middle"></i>刷新
             </el-button>
 
@@ -92,19 +67,19 @@ onMounted(() => {
             :code="htmlCode"
             language="html"
             v-if="initCodeTab === 'html'"
-            @update:code="handleCodeChange"
+            @update:code="(code) => onChangeEditor(code, initCodeTab)"
           />
           <plEditor
             :code="cssCode"
             language="css"
             v-if="initCodeTab === 'css'"
-            @update:code="handleCodeChange"
+            @update:code="(code) => onChangeEditor(code, initCodeTab)"
           />
           <plEditor
             :code="jsCode"
             language="javascript"
             v-if="initCodeTab === 'javascript'"
-            @update:code="handleCodeChange"
+            @update:code="(code) => onChangeEditor(code, initCodeTab)"
           />
         </div>
       </div>
@@ -123,7 +98,7 @@ onMounted(() => {
             ref="iframeRef"
             src="about:blank"
             frameborder="0"
-            :docsrc="test(htmlCode, cssCode, jsCode)"
+            :srcdoc="onGetRenderStr()"
           ></iframe>
         </div>
       </div>
@@ -180,6 +155,9 @@ onMounted(() => {
     .el-button {
       margin-left: 0;
     }
+    .el-select {
+      width: 200px;
+    }
   }
 }
 
@@ -187,6 +165,6 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
-  background-color: #1e1e1e;
+  background-color: #fff;
 }
 </style>

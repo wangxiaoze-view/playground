@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { useEditor } from '@/hooks/useEditor'
-import { onMounted, ref, watch } from 'vue'
+import { useEditor, type Editor } from '@/hooks/useEditor'
+import { nextTick, onMounted, ref, watch } from 'vue'
 
-const { editorRef, onEditorInit } = useEditor()
 const { code = '', language = '' } = defineProps<{
   code: string
   language: string
@@ -12,7 +11,10 @@ const emit = defineEmits<{
   'update:code': [code: string]
 }>()
 
+const { editorRef, onEditorInit } = useEditor()
+
 const editorCode = ref(code)
+let editor: Editor
 
 onMounted(() => {
   onEditorInit({
@@ -22,14 +24,23 @@ onMounted(() => {
       editorCode.value = newCode
       emit('update:code', newCode)
     },
+    onInit: (e: Editor) => {
+      editor = e
+    },
   })
 })
 
 watch(
   () => code,
   (newCode) => {
-    editorCode.value = newCode
+    nextTick(() => {
+      if (editor && newCode !== editorCode.value) {
+        editor.setValue(newCode)
+        editorCode.value = newCode
+      }
+    })
   },
+  { immediate: true },
 )
 </script>
 
