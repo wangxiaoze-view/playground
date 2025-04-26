@@ -14,7 +14,8 @@
     "lint:format": "prettier --write src/",
     "lint": "run-s lint:*",
     "release": "release-it",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",
@@ -39,6 +40,7 @@
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/tsconfig": "^0.7.0",
     "commitizen": "^4.3.1",
+    "conventional-changelog-cli": "^5.0.0",
     "cz-message-helper": "^2.0.0",
     "eslint": "^9.22.0",
     "eslint-plugin-oxlint": "^0.16.0",
