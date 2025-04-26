@@ -2,8 +2,6 @@
 import { useTab } from '@/hooks/useTab'
 import plEditor from './pl-editor.vue'
 import { useTemplate } from '@/hooks/useTemplate'
-import { parseShareLink } from '@/utils/share'
-import { onMounted } from 'vue'
 
 const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
 
@@ -38,6 +36,7 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTem
                 :label="item.label"
               ></el-option>
             </el-select>
+
             <el-button type="primary" @click="onGetRenderStr">
               <i class="ri-refresh-line icon icon-middle"></i>刷新
             </el-button>
@@ -81,7 +80,7 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTem
         <div class="pl-content-right--header">
           <div class="tab">
             <span class="active"><i class="ri-eye-fill icon icon-middle"></i>效果预览</span>
-            <span><i class="ri-terminal-box-fill icon icon-middle"></i>日志</span>
+            <!-- <span><i class="ri-terminal-box-fill icon icon-middle"></i>日志</span> -->
           </div>
           <div></div>
         </div>
@@ -134,7 +133,7 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTem
       .tool {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 8px;
       }
     }
   }

@@ -49,4 +49,8 @@ onMounted(() => {})
   display: flex;
   justify-content: flex-end;
 }
+
+.icon-middle {
+  margin-right: 6px;
+}
 </style>
