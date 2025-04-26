@@ -24,7 +24,13 @@ const onpenUrl = (url: string) => {
           @change="store.onSetThemeColor"
         />
         <el-tooltip class="box-item" effect="light" content="更新日志" placement="bottom">
-          <el-button type="primary"><i class="ri-blogger-line icon-middle"></i>更新日志</el-button>
+          <el-button
+            type="primary"
+            @click="
+              onpenUrl('https://github.com/wangxiaoze-view/playground/blob/main/CHANGELOG.md')
+            "
+            ><i class="ri-blogger-line icon-middle"></i>更新日志</el-button
+          >
         </el-tooltip>
 
         <!-- <pl-download /> -->
