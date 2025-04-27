@@ -6,6 +6,7 @@ import type { Template, TemplateItem } from './types'
 import { useCodeStore } from '@/store/modules/code'
 import { storeToRefs } from 'pinia'
 import pinia from '@/store'
+import { processCDNResources, processExternalResources } from '@/utils/resourceCache'
 
 const store = useCodeStore(pinia)
 const { getCdnType, getCurrrentTemplateKey, getCdnList } = storeToRefs(store)
@@ -41,6 +42,19 @@ export const onRenderHtml = (
     })
     .filter(Boolean)
     .join(`\n`)
+
+  // console.log(processExternalResources(cdns, 'js'))
+
+  // const generateFinalHtml = async (template: any, cdnType: string) => {
+  //   const { html, css, js } = template
+  //   const [processedCss, processedJs, cdnResources] = await Promise.all([
+  //     processExternalResources(css, 'css'),
+  //     processExternalResources(js, 'js'),
+  //     processCDNResources(cdnType),
+  //   ])
+  //   console.log(processedCss, processedJs, cdnResources)
+  // }
+  // generateFinalHtml(template, getCdnType.value)
   return `
   <!DOCTYPE html>
     <html>
