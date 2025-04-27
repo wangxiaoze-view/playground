@@ -3,7 +3,7 @@ import { useTab } from '@/hooks/useTab'
 import plEditor from './pl-editor.vue'
 import { useTemplate } from '@/hooks/useTemplate'
 const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
-const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr, onIframeLoad } =
+const { store, onChangeTemplate, templates, onGetRenderStr, onRefreshRender, plIframe } =
   useTemplate()
 </script>
 
@@ -31,7 +31,7 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr, onIframeL
             <el-cascader
               v-model="store.currrentTemplateKey"
               :options="templates"
-              @change="onChangeTemplate"
+              @change="onChangeTemplate('no-cache')"
             >
               <template #default="{ data }">
                 <i v-if="data.icon" :class="[data.icon, 'cascader-icon icon-middle']"></i>
@@ -60,19 +60,19 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr, onIframeL
             :code="store.htmlCode"
             language="html"
             v-if="initCodeTab === 'html'"
-            @update:code="(code) => store.onChangeEditor(code, initCodeTab)"
+            @update:code="(code) => onRefreshRender(code, initCodeTab)"
           />
           <plEditor
             :code="store.cssCode"
             language="css"
             v-if="initCodeTab === 'css'"
-            @update:code="(code) => store.onChangeEditor(code, initCodeTab)"
+            @update:code="(code) => onRefreshRender(code, initCodeTab)"
           />
           <plEditor
             :code="store.jsCode"
             language="javascript"
             v-if="initCodeTab === 'javascript'"
-            @update:code="(code) => store.onChangeEditor(code, initCodeTab)"
+            @update:code="(code) => onRefreshRender(code, initCodeTab)"
           />
         </div>
       </div>
@@ -87,15 +87,9 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr, onIframeL
           <div></div>
         </div>
         <div class="pl-content-right--editor pl-main">
-          <iframe
-            @load="onIframeLoad"
-            :key="store.currrentTemplateKey.toString() + store.cdnType"
-            ref="iframeRef"
-            src="about:blank"
-            frameborder="0"
-            loading="lazy"
-            :srcdoc="onGetRenderStr()"
-          ></iframe>
+          <Suspense>
+            <plIframe :ref="(el) => store.setIframeRef(el)" />
+          </Suspense>
         </div>
       </div>
     </el-col>

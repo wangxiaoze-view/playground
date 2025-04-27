@@ -1,12 +1,17 @@
-import { onRenderHtml, templates } from '@/config/template'
+import { templates } from '@/config/template'
+import type { TemplateItem } from '@/config/types'
 import { useCodeStore } from '@/store/modules/code'
-import { parseShareLink, type ShareTemplateData } from '@/utils/share'
-import { computed, onMounted, ref, watch, nextTick } from 'vue'
+import { onInitTemplateCache } from '@/utils/resourceCache'
+import { type ShareTemplateData } from '@/utils/share'
+import { storeToRefs } from 'pinia'
+import { computed, ref, nextTick } from 'vue'
+import plIframe from '@/components/pl-iframe.vue'
 
 export function useTemplate() {
-  const iframeRef = ref<HTMLIFrameElement | null>(null)
+  const srcdoc = ref('')
 
   const store = useCodeStore()
+  const { getCurrrentTemplateKey, getIframeRef } = storeToRefs(store)
 
   const onGetRenderStr = () => {
     return onRenderHtml(store.htmlCode, store.cssCode, store.jsCode, onGetCurrentTemplate.value!)
@@ -19,36 +24,67 @@ export function useTemplate() {
     return child
   })
 
-  const onGetTmpParams = computed((): ShareTemplateData => {
+  const onGetTmpParams = (type: 'cache' | 'no-cache'): ShareTemplateData => {
     return {
-      html: onGetCurrentTemplate.value!.html,
-      css: onGetCurrentTemplate.value!.css,
-      js: onGetCurrentTemplate.value!.js,
+      html: type === 'cache' ? store.htmlCode : onGetCurrentTemplate.value!.html,
+      css: type === 'cache' ? store.cssCode : onGetCurrentTemplate.value!.css,
+      js: type === 'cache' ? store.jsCode : onGetCurrentTemplate.value!.js,
       template: store.currrentTemplateKey,
     }
-  })
-  const onChangeTemplate = () => {
-    store.setLoading(true)
-    store.onSetTemplateCode(onGetTmpParams.value)
+  }
+  const onChangeTemplate = (type: 'cache' | 'no-cache') => {
+    store.onSetTemplateCode(onGetTmpParams(type))
+    nextTick(() => {
+      getIframeRef.value?.onInit(true)
+    })
   }
 
-  const onIframeLoad = () => {
-    setTimeout(() => {
-      store.setLoading(false)
-    }, 500)
+  const onRenderHtml = async (
+    htmlCode: string,
+    cssCode: string,
+    jsCode: string,
+    template: TemplateItem,
+    isLoading = true,
+  ) => {
+    const typeConfig = {
+      React: `type="text/babel"`,
+    }
+    const typeModel = typeConfig[getCurrrentTemplateKey.value[0] as keyof typeof typeConfig] || ''
+    const { css, js } = await onInitTemplateCache(template, isLoading)
+    return `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>${cssCode}</style>
+    ${css.map((i) => i).join('')}
+    ${js.map((i) => i).join('')}
+  </head>
+  <body>
+    ${htmlCode}
+    <script ${typeModel}>${jsCode}</script>
+  </body>
+</html>`
   }
 
-  onMounted(() => {
-    const shareData = parseShareLink()
-    store.onSetTemplateCode(shareData ? shareData : onGetTmpParams.value)
-    iframeRef.value?.addEventListener('load', onIframeLoad)
-  })
+  const onRefreshRender = (code: string, tabName: string) => {
+    store.onChangeEditor(code, tabName)
+    nextTick(() => {
+      getIframeRef.value?.onInit(false)
+    })
+  }
+
   return {
     store,
-    iframeRef,
+    srcdoc,
     templates,
     onChangeTemplate,
     onGetRenderStr,
-    onIframeLoad,
+    onGetCurrentTemplate,
+    onRenderHtml,
+    onRefreshRender,
+    plIframe,
+    onGetTmpParams,
   }
 }

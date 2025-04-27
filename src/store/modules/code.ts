@@ -15,15 +15,19 @@ export const useCodeStore = defineStore('code', {
       { name: 'cdnjs', url: 'https://cdnjs.cloudflare.com/ajax/libs/' },
     ],
     loading: false,
+    iframeRef: '' as any,
   }),
   getters: {
     getCdnType: (state) => state.cdnType,
     getCurrrentTemplateKey: (state) => state.currrentTemplateKey,
     getLoading: (state) => state.loading,
-
     getCdnList: (state) => state.cdnList,
+    getIframeRef: (state) => state.iframeRef,
   },
   actions: {
+    setIframeRef(ref: any) {
+      if (ref) this.iframeRef = ref
+    },
     setLoading(loading: boolean) {
       this.loading = loading
     },

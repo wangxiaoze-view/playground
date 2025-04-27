@@ -8,24 +8,35 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    vueDevTools(),
-    AutoImport({
-      imports: ['vue'],
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      dirs: ['src/components'],
-      resolvers: [ElementPlusResolver()],
-    }),
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+export default defineConfig(({ mode }) => {
+  return {
+    plugins: [
+      vue(),
+      vueJsx(),
+      vueDevTools(),
+      AutoImport({
+        imports: ['vue'],
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        dirs: ['src/components'],
+        resolvers: [ElementPlusResolver()],
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
     },
-  },
-  base: '/playground/',
+    base: '/playground/',
+    // 移除 console.log
+    build: {
+      terserOptions: {
+        compress: {
+          drop_console: mode === 'production',
+          drop_debugger: mode === 'production',
+        },
+      },
+    },
+  }
 })

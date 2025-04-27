@@ -21,6 +21,7 @@ declare module 'vue' {
     PlDownload: typeof import('./src/components/pl-download.vue')['default']
     PlEditor: typeof import('./src/components/pl-editor.vue')['default']
     PlHeader: typeof import('./src/components/pl-header.vue')['default']
+    PlIframe: typeof import('./src/components/pl-iframe.vue')['default']
     PlShare: typeof import('./src/components/pl-share.vue')['default']
   }
   export interface ComponentCustomProperties {

@@ -1,144 +1,90 @@
+import type { CdnType, TemplateItem } from '@/config/types'
+import pinia from '@/store'
+import { useCodeStore } from '@/store/modules/code'
+import { storeToRefs } from 'pinia'
+
 interface CachedResource {
   content: string
-  type: string
+  headerType: string
   timestamp: number
 }
 
-const CACHE_EXPIRY = 24 * 60 * 60 * 1000 // 24小时
+const store = useCodeStore(pinia)
+const { getCdnType, getCdnList } = storeToRefs(store)
 
-export class ResourceCache {
-  private static instance: ResourceCache
-  private cache: Map<string, CachedResource>
+export const cacheMap: Map<string, CachedResource> = new Map()
 
-  private constructor() {
-    this.cache = new Map()
-    this.loadFromStorage()
+const getResource = async (url: string): Promise<string | null> => {
+  const cached = cacheMap.get(url)
+  if (cached) {
+    return cached.content
   }
 
-  public static getInstance(): ResourceCache {
-    if (!ResourceCache.instance) {
-      ResourceCache.instance = new ResourceCache()
-    }
-    return ResourceCache.instance
-  }
+  try {
+    const response = await fetch(url)
+    if (!response.ok) return null
 
-  private loadFromStorage() {
-    try {
-      const stored = localStorage.getItem('resource-cache')
-      if (stored) {
-        const parsed = JSON.parse(stored)
-        this.cache = new Map(Object.entries(parsed))
-        this.cleanupExpired()
-      }
-    } catch (error) {
-      console.error('Failed to load cache from storage:', error)
-    }
-  }
+    const content = await response.text()
+    const headerType = response.headers.get('content-type') || 'text/plain'
 
-  private saveToStorage() {
-    try {
-      const serialized = JSON.stringify(Object.fromEntries(this.cache))
-      localStorage.setItem('resource-cache', serialized)
-    } catch (error) {
-      console.error('Failed to save cache to storage:', error)
-    }
-  }
-
-  private cleanupExpired() {
-    const now = Date.now()
-    for (const [url, resource] of this.cache.entries()) {
-      if (now - resource.timestamp > CACHE_EXPIRY) {
-        this.cache.delete(url)
-      }
-    }
-    this.saveToStorage()
-  }
-
-  public async getResource(url: string): Promise<string | null> {
-    const cached = this.cache.get(url)
-    if (cached && Date.now() - cached.timestamp < CACHE_EXPIRY) {
-      return cached.content
-    }
-
-    try {
-      const response = await fetch(url)
-      if (!response.ok) return null
-
-      const content = await response.text()
-      const type = response.headers.get('content-type') || 'text/plain'
-
-      this.cache.set(url, {
-        content,
-        type,
-        timestamp: Date.now(),
-      })
-
-      this.saveToStorage()
-      return content
-    } catch (error) {
-      console.error('Failed to fetch resource:', error)
-      return null
-    }
-  }
-
-  public clearCache() {
-    this.cache.clear()
-    localStorage.removeItem('resource-cache')
+    cacheMap.set(url, {
+      content,
+      headerType,
+      timestamp: Date.now(),
+    })
+    return content
+  } catch {
+    return null
   }
 }
-export const resourceCache = ResourceCache.getInstance()
-
 // 处理外部资源
-export const processExternalResources = async (content: string, type: 'css' | 'js') => {
-  const regex = type === 'css' ? /url\(['"]?([^'")]+)['"]?\)/g : /src=['"]([^'"]+)['"]/g
-  let processedContent = content
-  const matches = content.matchAll(regex)
+export const processExternalResources = async (cdnList: CdnType[], isLoading = true) => {
+  let css = []
+  let js = []
 
-  for (const match of matches) {
-    const url = match[1]
-    if (url.startsWith('http')) {
-      const cachedContent = await resourceCache.getResource(url)
-      console.log(cachedContent, 12)
-      if (cachedContent) {
-        if (type === 'css') {
-          processedContent = processedContent.replace(
-            `url('${url}')`,
-            `url('data:text/css;base64,${btoa(cachedContent)}')`,
-          )
-        } else {
-          processedContent = processedContent.replace(
-            `src="${url}"`,
-            `src="data:text/javascript;base64,${JSON.stringify(cachedContent)}"`,
-          )
-        }
+  let loadingIndex = 0
+
+  store.setLoading(isLoading)
+  for (let i = 0; i < cdnList.length; i++) {
+    const current = cdnList[i]
+    loadingIndex++
+    const cachedContent = await getResource(current.url)
+    if (cachedContent) {
+      if (current.type === 'style') {
+        css.push(`<style>${cachedContent}</style>`)
+      } else if (current.type === 'script') {
+        js.push(`<script>${cachedContent}</script>`)
       }
     }
   }
 
-  return processedContent
+  setTimeout(() => {
+    store.setLoading(loadingIndex === cdnList.length ? false : true)
+  }, 500)
+  return [css.filter(Boolean), js.filter(Boolean)]
 }
 
-// 处理 CDN 资源
-export const processCDNResources = async (cdnType: string) => {
-  const cdnUrls = {
-    css:
-      cdnType === 'unpkg'
-        ? 'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'
-        : 'https://cdn.jsdelivr.net/npm/tailwindcss@^2/dist/tailwind.min.css',
-    js:
-      cdnType === 'unpkg'
-        ? 'https://unpkg.com/vue@3/dist/vue.global.js'
-        : 'https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js',
-  }
+export const onInitTemplateCache = async (template: TemplateItem, isLoading = true) => {
+  const { cdn } = template
+  const cdnType = (name: string) => (['bootcdn', 'cdnjs'].includes(name) ? 'cdnjs' : name)
+  const isExist = (name: string) => getCdnList.value.find((item) => item.name === cdnType(name))
 
-  const [cssContent, jsContent] = await Promise.all([
-    resourceCache.getResource(cdnUrls.css),
-    resourceCache.getResource(cdnUrls.js),
-  ])
+  const cdnBase = isExist(getCdnType.value)?.url || isExist('jsdelivr')?.url
+  const cdnList = cdn[cdnType(getCdnType.value) as keyof TemplateItem['cdn']]
+    .map((item) => {
+      let url = item.url.startsWith('https://') ? item.url : `${cdnBase}${item.url}`
+      if (item.type === 'script') {
+        return { type: 'script', url }
+      } else if (item.type === 'style') {
+        return { type: 'style', url }
+      }
+      return null
+    })
+    .filter(Boolean) as CdnType[]
+
+  const [css, js] = await processExternalResources(cdnList, isLoading)
   return {
-    css: cssContent
-      ? `<style>${cssContent}</style>`
-      : `<link href="${cdnUrls.css}" rel="stylesheet">`,
-    js: jsContent ? `<script>${jsContent}</script>` : `<script src="${cdnUrls.js}"></script>`,
+    css,
+    js,
   }
 }

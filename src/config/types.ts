@@ -3,7 +3,7 @@ interface BaseTempalte {
   label: string
   icon: string
 }
-type CdnType = { type: 'script' | 'style'; url: string }
+export type CdnType = { type: 'script' | 'style' | string; url: string }
 export interface TemplateSdn {
   unpkg: CdnType[]
   jsdelivr: CdnType[]

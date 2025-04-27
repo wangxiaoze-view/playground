@@ -2,7 +2,7 @@
 import { useThemeStore } from '@/store/modules/theme'
 import { EColor } from 'functional-helpers/enums'
 import plShare from './pl-share.vue'
-import plDownload from './pl-download.vue'
+// import plDownload from './pl-download.vue'
 import { links } from '@/config/cdn'
 import { useCodeStore } from '@/store/modules/code'
 import { useTemplate } from '@/hooks/useTemplate'
@@ -31,7 +31,7 @@ const onpenUrl = (url: string) => {
             class="w"
             v-model="codeStore.cdnType"
             placeholder="请选择CDN"
-            @change="onChangeTemplate"
+            @change="onChangeTemplate('cache')"
           >
             <el-option
               v-for="item in codeStore.cdnList"

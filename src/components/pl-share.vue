@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { generateShareLink, copyToClipboard } from '@/utils/share'
 import { useCodeStore } from '@/store/modules/code'
@@ -28,9 +28,6 @@ const handleShare = async () => {
     isGenerating.value = false
   }
 }
-
-// 解析分享链接
-onMounted(() => {})
 </script>
 
 <template>
