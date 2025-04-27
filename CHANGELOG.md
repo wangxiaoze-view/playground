@@ -1,3 +1,27 @@
+# [1.1.0](https://github.com/wangxiaoze-view/playground/compare/1.0.1...1.1.0) (2025-04-27)
+
+
+* Release 1.1.0 ([bd043d6](https://github.com/wangxiaoze-view/playground/commit/bd043d658b56e28104002a037ad9aea31e7fc37c))
+
+
+### ♻ Code Refactoring | 代码重构
+
+* 重构资源缓存和模板渲染逻辑 ([9bc5131](https://github.com/wangxiaoze-view/playground/commit/9bc513100cf8e556d7bf2e7925ae010c71608bb5))
+* **components:** 优化更新日志按钮功能 ([def3a5b](https://github.com/wangxiaoze-view/playground/commit/def3a5b5919b14cc22b8a20e4f6749996af0d5fe))
+
+
+### ✨ Features | 新功能
+
+* **config:** 重构模板配置并添加新功能 ([e00b131](https://github.com/wangxiaoze-view/playground/commit/e00b131e1bdbdbba757b58f9ecd709a7df24dc2a))
+* **resource:** 添加资源缓存和处理功能 ([726661c](https://github.com/wangxiaoze-view/playground/commit/726661c82fc22b5a062b36c28650105f7f51efcc))
+
+
+### 📝 Documentation | 文档
+
+* 优化 CHANGELOG.md 生成配置 ([d98aec6](https://github.com/wangxiaoze-view/playground/commit/d98aec6a5a9ad61245eff50f349b1c5742dd877c))
+
+
+
 ## [1.0.1](https://github.com/wangxiaoze-view/playground/compare/1.0.0...1.0.1) (2025-04-26)
 
 
