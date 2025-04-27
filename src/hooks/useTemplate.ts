@@ -35,7 +35,9 @@ export function useTemplate() {
   const onChangeTemplate = (type: 'cache' | 'no-cache') => {
     store.onSetTemplateCode(onGetTmpParams(type))
     nextTick(() => {
-      getIframeRef.value?.onInit(true)
+      setTimeout(() => {
+        getIframeRef.value?.onInit(true)
+      }, 100)
     })
   }
 

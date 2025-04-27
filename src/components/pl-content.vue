@@ -87,9 +87,7 @@ const { store, onChangeTemplate, templates, onGetRenderStr, onRefreshRender, plI
           <div></div>
         </div>
         <div class="pl-content-right--editor pl-main">
-          <Suspense>
-            <plIframe :ref="(el) => store.setIframeRef(el)" />
-          </Suspense>
+          <plIframe :ref="(el) => store.setIframeRef(el)" />
         </div>
       </div>
     </el-col>

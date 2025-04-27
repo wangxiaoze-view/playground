@@ -125,7 +125,7 @@ ReactDOM.render(
     js: `const { Button, Flex } = antd;
 ReactDOM.render(
   <div>
-    <h1>Hello Semi!</h1>
+    <h1>Hello Ant-Design!</h1>
     <Flex gap="small" wrap>
       <Button type="primary">Primary Button</Button>
       <Button>Default Button</Button>
