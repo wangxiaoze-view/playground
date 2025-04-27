@@ -3,10 +3,8 @@ import { onMounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { generateShareLink, copyToClipboard } from '@/utils/share'
 import { useCodeStore } from '@/store/modules/code'
-
 const isGenerating = ref(false)
 const store = useCodeStore()
-
 const handleShare = async () => {
   try {
     isGenerating.value = true

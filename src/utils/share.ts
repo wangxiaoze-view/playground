@@ -1,7 +1,7 @@
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string'
 
 export interface ShareTemplateData {
-  template: string
+  template: string[]
   html: string
   css: string
   js: string

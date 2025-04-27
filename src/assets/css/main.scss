@@ -38,3 +38,52 @@ body,
     height: calc(100vh - 60px - 50px - 2px);
   }
 }
+
+// 自定义icon
+@font-face {
+  font-family: 'iconfont'; /* Project id 4907500 */
+  src:
+    url('//at.alicdn.com/t/c/font_4907500_ivirktwhywb.woff2?t=1745737564821') format('woff2'),
+    url('//at.alicdn.com/t/c/font_4907500_ivirktwhywb.woff?t=1745737564821') format('woff'),
+    url('//at.alicdn.com/t/c/font_4907500_ivirktwhywb.ttf?t=1745737564821') format('truetype');
+}
+
+.iconfont {
+  font-family: 'iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jquery:before {
+  content: '\e655';
+}
+
+.icon-elementui:before {
+  content: '\e608';
+}
+
+.icon-vant:before {
+  content: '\e615';
+}
+
+.icon-antd:before {
+  content: '\e60f';
+}
+
+.icon-semi-icons-semi_logo:before {
+  content: '\e840';
+}
+
+.icon-element-plus:before {
+  content: '\e690';
+}
+
+.icon-a-antd1:before {
+  content: '\e605';
+}
+
+.icon-javascript-fill:before {
+  content: '\e775';
+}

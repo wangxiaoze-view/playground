@@ -6,11 +6,13 @@
     ".gitignore": ".gitattributes",
     ".env": ".env.development,.env.production",
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig,.cz-message.cjs,.browserslistrc,.stylelintrc.mjs,.stylelintignore,.stylelintcache,.release-it.json,commitlint.config.cjs,commitlog-option.mjs",
-    "vite.config.ts": "tsconfig.json,web-types.json,auto-imports.d.ts,components.d.ts,LICENSE"
+    "vite.config.ts": "tsconfig.json,web-types.json,auto-imports.d.ts,components.d.ts,index.html",
+    "README.md": "CHANGELOG.md,LICENSE,README.zh-CN.md,README.md"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "oxc.enable": true
 }

@@ -1,21 +1,16 @@
 <script lang="ts" setup>
 import { useEditor, type Editor } from '@/hooks/useEditor'
 import { nextTick, onMounted, ref, watch } from 'vue'
-
 const { code = '', language = '' } = defineProps<{
   code: string
   language: string
 }>()
-
 const emit = defineEmits<{
   'update:code': [code: string]
 }>()
-
 const { editorRef, onEditorInit } = useEditor()
-
 const editorCode = ref(code)
 let editor: Editor
-
 onMounted(() => {
   onEditorInit({
     code: editorCode,
@@ -29,7 +24,6 @@ onMounted(() => {
     },
   })
 })
-
 watch(
   () => code,
   (newCode) => {

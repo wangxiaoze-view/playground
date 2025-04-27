@@ -2,14 +2,18 @@
 import { useTab } from '@/hooks/useTab'
 import plEditor from './pl-editor.vue'
 import { useTemplate } from '@/hooks/useTemplate'
-
 const { initCodeTab, codeTab, onChangeCodeTab } = useTab()
-
-const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTemplate()
+const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr, onIframeLoad } =
+  useTemplate()
 </script>
 
 <template>
-  <el-row :gutter="0" class="pl-content">
+  <el-row
+    :gutter="0"
+    class="pl-content"
+    v-loading.fullscreen="store.getLoading"
+    element-loading-text="资源正在加载，请稍等..."
+  >
     <el-col :span="12">
       <div class="pl-content-left">
         <div class="pl-content-left--header">
@@ -24,18 +28,16 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTem
             </span>
           </div>
           <div class="tool">
-            <el-select
+            <el-cascader
               v-model="store.currrentTemplateKey"
+              :options="templates"
               @change="onChangeTemplate"
-              placeholder="请选择模板"
             >
-              <el-option
-                v-for="item in templates"
-                :key="item.key"
-                :value="item.key"
-                :label="item.label"
-              ></el-option>
-            </el-select>
+              <template #default="{ data }">
+                <i v-if="data.icon" :class="[data.icon, 'cascader-icon icon-middle']"></i>
+                {{ data.label }}
+              </template>
+            </el-cascader>
 
             <el-button type="primary" @click="onGetRenderStr">
               <i class="ri-refresh-line icon icon-middle"></i>刷新
@@ -86,9 +88,12 @@ const { store, iframeRef, onChangeTemplate, templates, onGetRenderStr } = useTem
         </div>
         <div class="pl-content-right--editor pl-main">
           <iframe
+            @load="onIframeLoad"
+            :key="store.currrentTemplateKey.toString() + store.cdnType"
             ref="iframeRef"
             src="about:blank"
             frameborder="0"
+            loading="lazy"
             :srcdoc="onGetRenderStr()"
           ></iframe>
         </div>
@@ -157,5 +162,9 @@ iframe {
   height: 100%;
   border: none;
   background-color: #fff;
+}
+
+.cascader-icon {
+  color: var(--el-color-primary);
 }
 </style>

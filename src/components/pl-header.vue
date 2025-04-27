@@ -3,8 +3,12 @@ import { useThemeStore } from '@/store/modules/theme'
 import { EColor } from 'functional-helpers/enums'
 import plShare from './pl-share.vue'
 import plDownload from './pl-download.vue'
+import { links } from '@/config/cdn'
+import { useCodeStore } from '@/store/modules/code'
+import { useTemplate } from '@/hooks/useTemplate'
 const store = useThemeStore()
-
+const codeStore = useCodeStore()
+const { onChangeTemplate } = useTemplate()
 const onpenUrl = (url: string) => {
   window.open(url, '_blank')
 }
@@ -17,20 +21,38 @@ const onpenUrl = (url: string) => {
     </el-col>
     <el-col :span="12">
       <div class="pl-header-tool">
+        <el-tooltip
+          class="box-item"
+          effect="light"
+          content="如果加载缓慢，请尝试切换CDN"
+          placement="bottom"
+        >
+          <el-select
+            class="w"
+            v-model="codeStore.cdnType"
+            placeholder="请选择CDN"
+            @change="onChangeTemplate"
+          >
+            <el-option
+              v-for="item in codeStore.cdnList"
+              :key="item.name"
+              :value="item.name"
+              :label="item.name"
+            ></el-option>
+          </el-select>
+        </el-tooltip>
+
         <el-color-picker
           v-model="store.themeColor"
           :show-alpha="false"
           :predefine="Object.values(EColor)"
           @change="store.onSetThemeColor"
         />
+
         <el-tooltip class="box-item" effect="light" content="更新日志" placement="bottom">
-          <el-button
-            type="primary"
-            @click="
-              onpenUrl('https://github.com/wangxiaoze-view/playground/blob/main/CHANGELOG.md')
-            "
-            ><i class="ri-blogger-line icon-middle"></i>更新日志</el-button
-          >
+          <el-button type="primary" @click="onpenUrl(links.uploadLog)">
+            <i class="ri-blogger-line icon-middle"></i>更新日志
+          </el-button>
         </el-tooltip>
 
         <!-- <pl-download /> -->
@@ -39,17 +61,11 @@ const onpenUrl = (url: string) => {
           <el-button type="primary"><i class="ri-settings-2-line icon-middle"></i>设置</el-button>
         </el-tooltip> -->
         <el-tooltip class="box-item" effect="light" content="我的项目" placement="bottom">
-          <i
-            class="ri-bubble-chart-fill icon icon-middle"
-            @click="onpenUrl('https://www.wangxiaoze.cn/')"
-          ></i>
+          <i class="ri-bubble-chart-fill icon icon-middle" @click="onpenUrl(links.home)"></i>
         </el-tooltip>
 
         <el-tooltip class="box-item" effect="light" content="Github" placement="bottom">
-          <i
-            class="ri-github-fill icon"
-            @click="onpenUrl('https://github.com/wangxiaoze-view/playground')"
-          ></i>
+          <i class="ri-github-fill icon" @click="onpenUrl(links.github)"></i>
         </el-tooltip>
       </div>
     </el-col>
@@ -80,5 +96,8 @@ const onpenUrl = (url: string) => {
       }
     }
   }
+}
+.w {
+  width: 100px;
 }
 </style>

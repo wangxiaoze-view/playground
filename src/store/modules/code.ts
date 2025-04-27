@@ -6,10 +6,27 @@ export const useCodeStore = defineStore('code', {
     htmlCode: '',
     cssCode: '',
     jsCode: '',
-    currrentTemplateKey: 'default',
+    currrentTemplateKey: ['default', 'JavaScript'],
+    cdnType: 'jsdelivr',
+    cdnList: [
+      { name: 'bootcdn', url: 'https://cdn.bootcdn.net/ajax/libs/' },
+      { name: 'unpkg', url: 'https://unpkg.com/' },
+      { name: 'jsdelivr', url: 'https://cdn.jsdelivr.net/npm/' },
+      { name: 'cdnjs', url: 'https://cdnjs.cloudflare.com/ajax/libs/' },
+    ],
+    loading: false,
   }),
-  getters: {},
+  getters: {
+    getCdnType: (state) => state.cdnType,
+    getCurrrentTemplateKey: (state) => state.currrentTemplateKey,
+    getLoading: (state) => state.loading,
+
+    getCdnList: (state) => state.cdnList,
+  },
   actions: {
+    setLoading(loading: boolean) {
+      this.loading = loading
+    },
     onSetTemplateCode(template: ShareTemplateData) {
       this.htmlCode = template.html
       this.cssCode = template.css
