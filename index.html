@@ -4,7 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Play-Grrouund</title>
+    <script>
+      ;(function () {
+        const host = window.location.host
+        const head = document.getElementsByTagName('head')[0]
+        var hm = document.createElement('script')
+        hm.defer = true
+        hm.src = 'https://cloud.umami.is/script.js'
+        if (['www.wangxiaoze.cn', 'wangxiaoze.cn'].includes(host)) {
+          hm.setAttribute('data-website-id', '63e283e0-9946-4f12-a732-c0e74a121289')
+        } else if (['wangxiaoze-view.github.io', 'localhost'].includes(host)) {
+          hm.setAttribute('data-website-id', '81502827-f215-4db2-9026-fa822e3c583e')
+        } else {
+          hm.setAttribute('data-website-id', '63e283e0-9946-4f12-a732-c0e74a121289')
+        }
+        head.appendChild(hm)
+      })()
+    </script>
   </head>
   <body>
     <div id="app">
