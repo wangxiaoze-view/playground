@@ -41,6 +41,13 @@ export function useTemplate() {
     })
   }
 
+  const onGetScriptType = () => {
+    const typeConfig = {
+      React: `type="text/babel"`,
+    }
+    return typeConfig[getCurrrentTemplateKey.value[0] as keyof typeof typeConfig] || ''
+  }
+
   const onRenderHtml = async (
     htmlCode: string,
     cssCode: string,
@@ -48,10 +55,6 @@ export function useTemplate() {
     template: TemplateItem,
     isLoading = true,
   ) => {
-    const typeConfig = {
-      React: `type="text/babel"`,
-    }
-    const typeModel = typeConfig[getCurrrentTemplateKey.value[0] as keyof typeof typeConfig] || ''
     const { css, js } = await onInitTemplateCache(template, isLoading)
     return `
 <!DOCTYPE html>
@@ -65,7 +68,7 @@ export function useTemplate() {
   </head>
   <body>
     ${htmlCode}
-    <script ${typeModel}>${jsCode}</script>
+    <script ${onGetScriptType()}>${jsCode}</script>
   </body>
 </html>`
   }
@@ -88,5 +91,6 @@ export function useTemplate() {
     onRefreshRender,
     plIframe,
     onGetTmpParams,
+    onGetScriptType,
   }
 }

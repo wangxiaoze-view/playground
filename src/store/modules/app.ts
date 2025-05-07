@@ -10,13 +10,14 @@ export function hexToRgba(hex: string, n = 1) {
     ? `rgba(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}, ${n})`
     : null
 }
-
-export const useThemeStore = defineStore('theme', {
+export const useAppStore = defineStore('app', {
   state: () => ({
     themeColor: '#292929',
+    isTour: localStorage.getItem('pl_tour') === 'false' ? false : true,
   }),
   getters: {
     getThemeColor: (state) => state.themeColor,
+    getIsTour: (state) => state.isTour,
   },
   actions: {
     onSetThemeColor(color: string) {
@@ -33,6 +34,10 @@ export const useThemeStore = defineStore('theme', {
         const color = hexToRgba(this.themeColor, toNumber(1 - i * 0.1))
         if (color) useCssVar(`--el-color-primary-light-${i}`, el).value = color
       }
+    },
+    onSetTour(isTour: boolean) {
+      this.isTour = isTour
+      localStorage.setItem('pl_tour', isTour.toString())
     },
   },
 })

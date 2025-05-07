@@ -22,7 +22,6 @@ const handleShare = async () => {
       ElMessage.error('复制失败')
     }
   } catch (error) {
-    console.error('Failed to generate share link:', error)
     ElMessage.error('生成分享链接失败')
   } finally {
     isGenerating.value = false

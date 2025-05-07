@@ -28,16 +28,18 @@ const { store, onChangeTemplate, templates, onGetRenderStr, onRefreshRender, plI
             </span>
           </div>
           <div class="tool">
-            <el-cascader
-              v-model="store.currrentTemplateKey"
-              :options="templates"
-              @change="onChangeTemplate('no-cache')"
-            >
-              <template #default="{ data }">
-                <i v-if="data.icon" :class="[data.icon, 'cascader-icon icon-middle']"></i>
-                {{ data.label }}
-              </template>
-            </el-cascader>
+            <div class="tool-template">
+              <el-cascader
+                v-model="store.currrentTemplateKey"
+                :options="templates"
+                @change="onChangeTemplate('no-cache')"
+              >
+                <template #default="{ data }">
+                  <i v-if="data.icon" :class="[data.icon, 'cascader-icon icon-middle']"></i>
+                  {{ data.label }}
+                </template>
+              </el-cascader>
+            </div>
 
             <el-button type="primary" @click="onGetRenderStr">
               <i class="ri-refresh-line icon icon-middle"></i>刷新

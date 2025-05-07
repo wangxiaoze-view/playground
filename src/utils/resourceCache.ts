@@ -68,7 +68,6 @@ export const onInitTemplateCache = async (template: TemplateItem, isLoading = tr
   const { cdn } = template
   const cdnType = (name: string) => (['bootcdn', 'cdnjs'].includes(name) ? 'cdnjs' : name)
   const isExist = (name: string) => getCdnList.value.find((item) => item.name === cdnType(name))
-
   const cdnBase = isExist(getCdnType.value)?.url || isExist('jsdelivr')?.url
   const cdnList = cdn[cdnType(getCdnType.value) as keyof TemplateItem['cdn']]
     .map((item) => {
@@ -81,7 +80,6 @@ export const onInitTemplateCache = async (template: TemplateItem, isLoading = tr
       return null
     })
     .filter(Boolean) as CdnType[]
-
   const [css, js] = await processExternalResources(cdnList, isLoading)
   return {
     css,

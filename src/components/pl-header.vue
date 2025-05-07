@@ -1,13 +1,14 @@
 <script lang="ts" setup>
-import { useThemeStore } from '@/store/modules/theme'
+import { useAppStore } from '@/store/modules/app'
 import { EColor } from 'functional-helpers/enums'
 import plShare from './pl-share.vue'
-// import plDownload from './pl-download.vue'
+import plDownload from './pl-download.vue'
 import { links } from '@/config/cdn'
 import { useCodeStore } from '@/store/modules/code'
 import { useTemplate } from '@/hooks/useTemplate'
-const store = useThemeStore()
+const store = useAppStore()
 const codeStore = useCodeStore()
+const appStore = useAppStore()
 const { onChangeTemplate } = useTemplate()
 const onpenUrl = (url: string) => {
   window.open(url, '_blank')
@@ -49,17 +50,23 @@ const onpenUrl = (url: string) => {
           @change="store.onSetThemeColor"
         />
 
+        <el-tooltip class="box-item" effect="light" content="使用教程" placement="bottom">
+          <el-button type="primary" @click="appStore.onSetTour(true)">
+            <i class="ri-book-3-line icon-middle"></i>使用教程
+          </el-button>
+        </el-tooltip>
+
         <el-tooltip class="box-item" effect="light" content="更新日志" placement="bottom">
           <el-button type="primary" @click="onpenUrl(links.uploadLog)">
             <i class="ri-blogger-line icon-middle"></i>更新日志
           </el-button>
         </el-tooltip>
 
-        <!-- <pl-download /> -->
+        <!-- 下载 -->
+        <pl-download />
+        <!-- 分享 -->
         <pl-share />
-        <!-- <el-tooltip class="box-item" effect="light" content="设置" placement="bottom">
-          <el-button type="primary"><i class="ri-settings-2-line icon-middle"></i>设置</el-button>
-        </el-tooltip> -->
+
         <el-tooltip class="box-item" effect="light" content="我的项目" placement="bottom">
           <i class="ri-bubble-chart-fill icon icon-middle" @click="onpenUrl(links.home)"></i>
         </el-tooltip>

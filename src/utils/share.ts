@@ -21,14 +21,11 @@ export function generateShareLink(data: ShareTemplateData): string {
 export function parseShareLink(): ShareTemplateData | null {
   const urlParams = new URLSearchParams(window.location.search)
   const code = urlParams.get('code')
-
   if (!code) return null
-
   try {
     const decompressed = decompressFromEncodedURIComponent(code)
     return JSON.parse(decompressed)
   } catch (error) {
-    console.error('Failed to parse share link:', error)
     return null
   }
 }
@@ -41,7 +38,6 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     await navigator.clipboard.writeText(text)
     return true
   } catch (error) {
-    console.error('Failed to copy to clipboard:', error)
     return false
   }
 }

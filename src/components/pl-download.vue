@@ -1,63 +1,41 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { ElMessage, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { downloadProject } from '@/utils/download'
 import { useCodeStore } from '@/store/modules/code'
 import { useTemplate } from '@/hooks/useTemplate'
+import { useLoading } from 'functional-helpers/hooks'
 
 const store = useCodeStore()
 const { templates } = useTemplate()
-const isDownloading = ref(false)
+const { loading, setLoading } = useLoading()
 
-const handleDownload = async (mode: 'simple' | 'project') => {
+const handleDownload = async () => {
   try {
-    ElMessage.warning('下载功能正在开发中...')
-    // isDownloading.value = true
-
-    // const currentTemplate = templates.find((t) => t.key === store.currrentTemplateKey)
-    // if (!currentTemplate) {
-    //   ElMessage.warning('未找到当前模板信息')
-    //   return
-    // }
-
-    // const success = await downloadProject({
-    //   html: store.htmlCode,
-    //   css: store.cssCode,
-    //   js: store.jsCode,
-    //   template: store.currrentTemplateKey,
-    //   templateName: currentTemplate.label,
-    //   mode,
-    // })
-
-    // if (success) {
-    //   ElMessage.success('项目下载成功')
-    // } else {
-    //   // ElMessage.error('项目下载失败')
-    // }
+    setLoading(true)
+    const parent = templates.find((t) => t.value === store.currrentTemplateKey[0])
+    const child = parent?.children?.find((t) => t.value === store.currrentTemplateKey[1])
+    if (!child) return ElMessage.warning('未找到当前模板信息')
+    const success = await downloadProject({
+      html: store.htmlCode,
+      css: store.cssCode,
+      js: store.jsCode,
+      template: child,
+      templateName: store.currrentTemplateKey.join('-'),
+    })
+    if (!success) return ElMessage.error('项目下载失败')
+    ElMessage.success('项目下载成功')
   } catch (error) {
     ElMessage.error('项目下载失败')
   } finally {
-    isDownloading.value = false
+    setLoading(false)
   }
 }
 </script>
 
 <template>
-  <el-dropdown trigger="click" @command="handleDownload">
-    <el-button type="primary" :loading="isDownloading">
-      <i class="ri-download-cloud-line icon-middle"></i>下载
-    </el-button>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item command="simple">
-          <i class="ri-file-line icon-middle"></i> 简单文件
-        </el-dropdown-item>
-        <el-dropdown-item command="project">
-          <i class="ri-folder-zip-line icon-middle"></i> 工程化项目
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <el-button type="primary" :loading="loading" @click="handleDownload">
+    <i class="ri-download-cloud-line icon-middle"></i>下载
+  </el-button>
 </template>
 
 <style lang="scss" scoped>
