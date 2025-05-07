@@ -1,3 +1,25 @@
+# [1.2.0](https://github.com/wangxiaoze-view/playground/compare/1.1.0...1.2.0) (2025-05-07)
+
+
+* Release 1.2.0 ([1e932d6](https://github.com/wangxiaoze-view/playground/commit/1e932d6d4a56adafd5d40012b6ae176a4aadd96e))
+
+
+### ♻ Code Refactoring | 代码重构
+
+* **components:** 优化内容组件和模板设置 ([c1eb08b](https://github.com/wangxiaoze-view/playground/commit/c1eb08bb4135ee8bc72f1c6c678d4558cf676205))
+
+
+### ✨ Features | 新功能
+
+* **tour:** 添加使用教程功能并优化相关组件 ([9737b91](https://github.com/wangxiaoze-view/playground/commit/9737b918b64836d9894a18dc8663240ec4c00858))
+
+
+### 📝 Documentation | 文档
+
+* 优化 CHANGELOG.md 生成配置 ([4b0baa1](https://github.com/wangxiaoze-view/playground/commit/4b0baa148942eae21e99fbe3f9d8764e5ee295d1))
+
+
+
 # [1.1.0](https://github.com/wangxiaoze-view/playground/compare/1.0.1...1.1.0) (2025-04-27)
 
 
