@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import viteCompression from 'vite-plugin-compression'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   return {
@@ -22,6 +23,13 @@ export default defineConfig(({ mode }) => {
         dirs: ['src/components'],
         resolvers: [ElementPlusResolver()],
       }),
+      viteCompression({
+        threshold: 10240,
+        // 根据个人需求设置
+        // algorithm: 'brotliCompress',
+        // ext: '.br',
+        ext: '.gz',
+      }),
     ],
     resolve: {
       alias: {
@@ -31,6 +39,16 @@ export default defineConfig(({ mode }) => {
     base: '/playground/',
     // 移除 console.log
     build: {
+      chunkSizeWarningLimit: 6000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id.toString().split('node_modules/')[1].split('/')[0].toString()
+            }
+          },
+        },
+      },
       terserOptions: {
         compress: {
           drop_console: mode === 'production',
