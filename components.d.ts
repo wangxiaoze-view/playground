@@ -8,17 +8,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCascader: typeof import('element-plus/es')['ElCascader']
-    ElCol: typeof import('element-plus/es')['ElCol']
-    ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
-    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElOption: typeof import('element-plus/es')['ElOption']
-    ElRow: typeof import('element-plus/es')['ElRow']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    ElTour: typeof import('element-plus/es')['ElTour']
-    ElTourStep: typeof import('element-plus/es')['ElTourStep']
     PlContent: typeof import('./src/components/pl-content.vue')['default']
     PlDownload: typeof import('./src/components/pl-download.vue')['default']
     PlEditor: typeof import('./src/components/pl-editor.vue')['default']
@@ -26,8 +15,5 @@ declare module 'vue' {
     PlIframe: typeof import('./src/components/pl-iframe.vue')['default']
     PlShare: typeof import('./src/components/pl-share.vue')['default']
     PlTour: typeof import('./src/components/pl-tour.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

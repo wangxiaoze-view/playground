@@ -13,12 +13,15 @@ store.onInitThemeColorr()
 app.mount('#app')
 declare global {
   interface Window {
-    umami?: {
-      track?: (eventName?: string, data?: Record<string, any>) => void
+    umami: {
+      track: (eventName?: string, data?: Record<string, any>) => void
     }
   }
 }
-if (!window.umami) window.umami = {}
+if (!window.umami)
+  window.umami = {
+    track: () => {},
+  }
 window.addEventListener('vite:preloadError', () => {
   window.location.reload()
 })
