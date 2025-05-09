@@ -7,7 +7,7 @@ const isGenerating = ref(false)
 const store = useCodeStore()
 const handleShare = async () => {
   try {
-    window.umami?.track('event_playground_share', {
+    umami.track('event_playground_share', {
       href: window.location.href,
       name: store.currrentTemplateKey.join('-'),
     })

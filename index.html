@@ -12,6 +12,12 @@
     <div id="app">
       <div class="sim-loading"></div>
     </div>
+    <script>
+      if (!window.umami)
+        window.umami = {
+          track: function () {},
+        }
+    </script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

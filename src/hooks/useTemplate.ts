@@ -34,7 +34,7 @@ export function useTemplate() {
   }
   const onChangeTemplate = (type: 'cache' | 'no-cache') => {
     store.onSetTemplateCode(onGetTmpParams(type))
-    window.umami?.track('event_playground_template', {
+    umami.track('event_playground_template', {
       href: window.location.href,
       name: store.currrentTemplateKey.join('-'),
       cdn: store.cdnType,
