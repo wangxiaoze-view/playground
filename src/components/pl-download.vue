@@ -11,6 +11,11 @@ const { loading, setLoading } = useLoading()
 
 const handleDownload = async () => {
   try {
+    window.umami?.track('event_playground_download', {
+      href: window.location.href,
+      name: store.currrentTemplateKey.join('-'),
+      cdn: store.cdnType,
+    })
     setLoading(true)
     const parent = templates.find((t) => t.value === store.currrentTemplateKey[0])
     const child = parent?.children?.find((t) => t.value === store.currrentTemplateKey[1])

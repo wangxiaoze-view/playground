@@ -7,6 +7,11 @@ const isGenerating = ref(false)
 const store = useCodeStore()
 const handleShare = async () => {
   try {
+    window.umami?.track('event_playground_share', {
+      href: window.location.href,
+      name: store.currrentTemplateKey.join('-'),
+    })
+
     isGenerating.value = true
     const shareLink = generateShareLink({
       html: store.htmlCode,

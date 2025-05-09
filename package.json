@@ -15,7 +15,8 @@
     "lint": "run-s lint:*",
     "release": "release-it",
     "commit": "git-cz",
-    "commitlog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./commitlog-option.mjs"
+    "commitlog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./commitlog-option.mjs",
+    "transform": "vite --debug transform"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",

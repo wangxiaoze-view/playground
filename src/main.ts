@@ -11,3 +11,15 @@ const app = createApp(App)
 setupStore(app)
 store.onInitThemeColorr()
 app.mount('#app')
+
+declare global {
+  interface Window {
+    umami?: {
+      track: (eventName?: string, data?: Record<string, any>) => void
+    }
+  }
+}
+
+window.addEventListener('vite:preloadError', () => {
+  window.location.reload()
+})

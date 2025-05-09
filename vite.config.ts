@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import viteCompression from 'vite-plugin-compression'
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   return {
@@ -37,7 +38,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     base: '/playground/',
-    // 移除 console.log
     build: {
       chunkSizeWarningLimit: 6000,
       rollupOptions: {
@@ -55,6 +55,9 @@ export default defineConfig(({ mode }) => {
           drop_debugger: mode === 'production',
         },
       },
+    },
+    optimizeDeps: {
+      include: ['element-plus', 'monaco-editor', 'functional-helpers'],
     },
   }
 })
