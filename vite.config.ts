@@ -38,8 +38,6 @@ export default defineConfig(({ mode }) => {
     },
     base: '/playground/',
     build: {
-      minify: true,
-      cssMinify: true,
       chunkSizeWarningLimit: 6000,
       rollupOptions: {
         output: {
