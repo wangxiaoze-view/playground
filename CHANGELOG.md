@@ -1,3 +1,43 @@
+## [1.2.1](https://github.com/wangxiaoze-view/playground/compare/1.2.0...1.2.1) (2025-05-12)
+
+
+* Release 1.2.1 ([bd41406](https://github.com/wangxiaoze-view/playground/commit/bd4140655f251a1d56955822b289703a835528e5))
+
+
+### ♻ Code Refactoring | 代码重构
+
+* 调整 umami 脚本初始化方式 ([ff6229d](https://github.com/wangxiaoze-view/playground/commit/ff6229dcba8454117c22319a41bdff8a135c44b9))
+* 将 Umami 统计脚本移至外部文件 ([3d14708](https://github.com/wangxiaoze-view/playground/commit/3d1470855d5c41ade7593371e0bdfecccfef02d1))
+* **index:** 重构网页加载和统计功能 ([09de87c](https://github.com/wangxiaoze-view/playground/commit/09de87ceb4895d6d5a2d8ab74322536dcfe6d200))
+* **types:** 移除未使用的 Element Plus 组件类型定义 ([4d4226c](https://github.com/wangxiaoze-view/playground/commit/4d4226c3abade12b6d458862a48cc9fda3dfe523))
+
+
+### ✨ Features | 新功能
+
+* **analytics:** integrate umami tracking across components ([5867bde](https://github.com/wangxiaoze-view/playground/commit/5867bde50b21c5171745e5496db28d7f23d3a193))
+* **index:** 添加 Umami 统计脚本并更新页面标题 ([e4a64ae](https://github.com/wangxiaoze-view/playground/commit/e4a64ae8d9549b6d779690d8615f517d2ea6ea22))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修正网页标题拼写错误 ([efa5018](https://github.com/wangxiaoze-view/playground/commit/efa50181425ad3ce9820163bcae92926d55bdc30))
+
+
+### 👷‍ Build System | 构建
+
+* 添加 gzip 压缩插件 ([1b991b9](https://github.com/wangxiaoze-view/playground/commit/1b991b9b0f9ddb27938a1bfe35072dfc2d556880))
+* 添加 hm.ts 文件并配置构建脚本 ([dc2694c](https://github.com/wangxiaoze-view/playground/commit/dc2694cd1cb4154dfdcc9c23f12c15df04e0a8e1))
+* 移除压缩选项 ([e4e8484](https://github.com/wangxiaoze-view/playground/commit/e4e84842540c99ef5aa663f63aa5507f43b966d5))
+* 优化代码结构并移除未使用的 TypeScript 文件 ([ab4d74e](https://github.com/wangxiaoze-view/playground/commit/ab4d74e39b1613fa5f6dbd7328768b5012341c95))
+
+
+### 📝 Documentation | 文档
+
+* 优化 CHANGELOG.md 生成配置 ([8180545](https://github.com/wangxiaoze-view/playground/commit/81805451525c736666799d861bc40fb9b6ca0c78))
+* **README:** 更新项目说明和建议使用 pnpm 安装 ([c3b39d7](https://github.com/wangxiaoze-view/playground/commit/c3b39d73d5f9cc904997c003c26af0e9ba97fec4))
+
+
+
 # [1.2.0](https://github.com/wangxiaoze-view/playground/compare/1.1.0...1.2.0) (2025-05-07)
 
 
