@@ -8,9 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import viteCompression from 'vite-plugin-compression'
-import { resolve } from 'node:path'
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   return {
     plugins: [
@@ -45,17 +43,10 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 6000,
       rollupOptions: {
         output: {
-          // manualChunks(id) {
-          //   if (id.includes('node_modules')) {
-          //     return id.toString().split('node_modules/')[1].split('/')[0].toString()
-          //   }
-          // },
-          manualChunks: {
-            vue: ['vue', 'pinia'],
-            monaco: ['monaco-editor'],
-            element: ['element-plus'],
-            str: ['file-saver', 'jszip', 'lz-string'],
-            util: ['lodash-es', 'functional-helpers'],
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id.toString().split('node_modules/')[1].split('/')[0].toString()
+            }
           },
         },
       },
