@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
-    base: '/playground/',
+    // base: '/playground/',
     build: {
       chunkSizeWarningLimit: 6000,
       rollupOptions: {
