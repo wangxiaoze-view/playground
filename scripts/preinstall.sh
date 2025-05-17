@@ -19,4 +19,5 @@ echo ""
 node ./scripts/preinstall.js
 echo ""
 echo ""
+pnpm install
 

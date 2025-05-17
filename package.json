@@ -18,7 +18,7 @@
     "commit": "git-cz",
     "commitlog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./commitlog-option.mjs",
     "transform": "vite --debug transform",
-    "preinstall": "sh ./scripts/preinstall.sh"
+    "init": "sh ./scripts/preinstall.sh"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",
