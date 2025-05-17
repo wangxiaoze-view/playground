@@ -9,5 +9,7 @@ if test "$Re_Install" = "true" ; then
 fi
 
 pnpm run build-only
-docker cp ./dist 1Panel-openresty-0yGn:/www/sites/playground.wangxiaoze.cn/index
+
+cd dist
+docker cp ./ 1Panel-openresty-0yGn:/www/sites/playground.wangxiaoze.cn/index
 
