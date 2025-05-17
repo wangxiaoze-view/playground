@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "build:sh": "sh build.sh",
+    "build:sh": "sh ./scripts/build.sh",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
@@ -18,14 +18,13 @@
     "commit": "git-cz",
     "commitlog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./commitlog-option.mjs",
     "transform": "vite --debug transform",
-    "preinstall": "sh pull.sh"
+    "preinstall": "sh ./scripts/preinstall.sh"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",
     "compare-func": "^2.0.0",
     "element-plus": "^2.9.8",
     "file-saver": "^2.0.5",
-    "functional-helpers": "file:./functional-helpers",
     "jszip": "^3.10.1",
     "lodash-es": "^4.17.21",
     "lz-string": "^1.5.0",
@@ -33,7 +32,8 @@
     "pinia": "^3.0.2",
     "remixicon": "^4.6.0",
     "sass": "^1.87.0",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "functional-helpers": "file:./lib-functional-helpers.tar.gz"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^9.0.2",
