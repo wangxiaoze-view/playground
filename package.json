@@ -17,14 +17,15 @@
     "release": "release-it",
     "commit": "git-cz",
     "commitlog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./commitlog-option.mjs",
-    "transform": "vite --debug transform"
+    "transform": "vite --debug transform",
+    "preinstall": "sh pull.sh"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",
     "compare-func": "^2.0.0",
     "element-plus": "^2.9.8",
     "file-saver": "^2.0.5",
-    "functional-helpers": "git@github.com:wangxiaoze-view/functional-helpers-lib.git",
+    "functional-helpers": "file:./functional-helpers",
     "jszip": "^3.10.1",
     "lodash-es": "^4.17.21",
     "lz-string": "^1.5.0",

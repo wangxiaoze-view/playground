@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # 是否需要install
 if test "$Re_Install" = "true" ; then
 	rm -rf node_modules pnpm-lock.yaml
