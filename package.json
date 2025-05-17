@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "build:sh": "sh ./scripts/base.sh",
+    "build:sh": "sh ./base.sh",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
@@ -18,7 +18,7 @@
     "commit": "git-cz",
     "commitlog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./commitlog-option.mjs",
     "transform": "vite --debug transform",
-    "preinstall": "sh ./scripts/pull.sh"
+    "preinstall": "sh ./pull.sh"
   },
   "dependencies": {
     "@types/file-saver": "^2.0.7",
