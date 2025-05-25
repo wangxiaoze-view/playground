@@ -11,5 +11,5 @@ fi
 pnpm run build-only
 
 cd dist
-docker cp ./ 1Panel-openresty-0yGn:/www/sites/playground.wangxiaoze.cn/index
+docker cp ./ "$CONTAINER":/www/sites/wangxiaoze.cn/index/playground
 
